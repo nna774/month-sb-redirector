@@ -5,7 +5,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: lambda.handler
-      Runtime: ruby2.5
+      Runtime: ruby2.7
       Timeout: 30
       FunctionName: month-sb-redirector
       Role: arn:aws:iam::486414336274:role/lambda-none
