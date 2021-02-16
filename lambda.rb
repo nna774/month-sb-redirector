@@ -19,7 +19,8 @@ def handler(event:, context:)
         ds
       }.join(?\t)
   }.join ?\n
-  body += "\n\n#{today.strftime('[%Y年]')} #{today.strftime('[%1m月]')}\n\n[月]"
+  body += "\n\n#{today.strftime('[%Y年]')} #{today.strftime('[%1m月]')}\n"
+  body += "##{today.prev_month.strftime('%Y/%2m')} ##{today.next_month.strftime('%Y年/%2m')}\n\n[月]"
   to += "?body=#{URI.encode(body)}"
   { location: to }
 end
