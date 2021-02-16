@@ -6,7 +6,7 @@ require 'json'
 require 'uri'
 
 def handler(event:, context:)
-  project = ENV['PROJECT']    
+  project = ENV['PROJECT']
   today = Date.today
   to = project + '/'
   to +=  "#{today.strftime('%Y%%2F%m')}"
