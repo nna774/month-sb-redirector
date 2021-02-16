@@ -1,11 +1,11 @@
 AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
-Resources: 
-  Function: 
-    Type: AWS::Serverless::Function 
-    Properties: 
+Resources:
+  Function:
+    Type: AWS::Serverless::Function
+    Properties:
       Handler: lambda.handler
-      Runtime: ruby2.5 
+      Runtime: ruby2.5
       Timeout: 30
       FunctionName: month-sb-redirector
       Role: arn:aws:iam::486414336274:role/lambda-none
