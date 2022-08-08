@@ -3,7 +3,6 @@ require 'time'
 require 'active_support/core_ext/date'
 require 'active_support/core_ext/time'
 require 'json'
-require 'uri'
 
 def handler(event:, context:)
   project = context['PROJECT_NAME'] || ENV['PROJECT']
@@ -21,6 +20,6 @@ def handler(event:, context:)
   }.join ?\n
   body += "\n\n#{theday.strftime('[%Y年]')} #{theday.strftime('[%1m月]')}\n"
   body += "##{theday.prev_month.strftime('%Y/%2m')} ##{theday.next_month.strftime('%Y/%2m')}\n\n[月]"
-  to += "?body=#{URI.encode(body)}"
+  to += "?body=#{CGI.escape(body)}"
   { location: to }
 end
