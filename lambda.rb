@@ -6,12 +6,12 @@ require 'json'
 require 'uri'
 
 def handler(event:, context:)
-  project = ENV['PROJECT']
-  today = Date.today
+  project = context['PROJECT_NAME'] || ENV['PROJECT']
+  theday = context['RUN_AT_PAST'] || Date.today
   to = project + '/'
-  to +=  "#{today.strftime('%Y%%2F%m')}"
+  to +=  "#{theday.strftime('%Y%%2F%m')}"
   body = "table:days\n [日曜日]\t[月曜日]\t[火曜日]\t[水曜日]\t[木曜日]\t[金曜日]\t[土曜日]\n"
-  body += today.all_month.slice_before(&:sunday?).map.with_index { |ds, i|
+  body += theday.all_month.slice_before(&:sunday?).map.with_index { |ds, i|
     ?\t + ds.map { |d|
         d.strftime('[%Y/%m/%d]')
       }.tap { |l|
@@ -19,8 +19,8 @@ def handler(event:, context:)
         ds
       }.join(?\t)
   }.join ?\n
-  body += "\n\n#{today.strftime('[%Y年]')} #{today.strftime('[%1m月]')}\n"
-  body += "##{today.prev_month.strftime('%Y/%2m')} ##{today.next_month.strftime('%Y/%2m')}\n\n[月]"
+  body += "\n\n#{theday.strftime('[%Y年]')} #{theday.strftime('[%1m月]')}\n"
+  body += "##{theday.prev_month.strftime('%Y/%2m')} ##{theday.next_month.strftime('%Y/%2m')}\n\n[月]"
   to += "?body=#{URI.encode(body)}"
   { location: to }
 end
